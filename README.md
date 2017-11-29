@@ -1,8 +1,6 @@
-# About
-
-Software java da command line per l'analisi dei dati presenti su un catalogo open data basato su ckan.
+## QualityAnalyzer
+è un software java da eseguire da linea di comando l'analisi dei dati presenti su un catalogo open data basato su ckan.
 Viene usato dati.trentino.it come test.
-
 
 ## Pre-requisiti
 
