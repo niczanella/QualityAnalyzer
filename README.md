@@ -10,7 +10,7 @@ Viene usato dati.trentino.it come test.
 1. ant >= 1.9.9
 1. unzip
 
-## Avvio quick&dirty ##
+## Avvio quick&dirty 
 (in pratica non serve molto ...)
 - compilazione
 - distribuzione
@@ -25,18 +25,18 @@ inviare i comandi
 - initDB
 - validate-all-resources
 
-## task di ant ##
-# compilazione
+## task di ant 
+### compilazione
 ant compila tutti i sorgenti java
 ```
 ant compile
 ```
-# distribuzione
+### distribuzione
 ant genera nella directory dist il pacchetto jar necessario e copia le librerie dipendenti
 ```
 ant dist
 ```
-# setup
+### setup
 ant invoca lo script *setup.sh* che si occupa di inizializzare il file sqlite db.sqlite creando tabelle e popolandole con dati ISTAT dei limiti amministrativi
 ```
 ant setup
@@ -47,11 +47,11 @@ chmod 755 setup.sh
 ./setup.sh
 ```
 
-# esecuzione
+### esecuzione
 ```
 ant run
 ```
-# pulizia
+### pulizia
 ```
 ant clean
 ```
