@@ -8,7 +8,7 @@ Viene usato dati.trentino.it come test.
 
   * libreria spatialite >= 4.3.0
   * spatialite-tool >= 4.3.0
-  * java >= 1.7
+  * java >= 1.8
   * ant >= 1.7
   * unzip
 
