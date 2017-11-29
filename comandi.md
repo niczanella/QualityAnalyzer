@@ -22,7 +22,7 @@ Popolamento tabella resource_controls da zero (vengono eliminati i dati già pre
 ## continue-validate-all-resources 
 completamento procedura validate-all-resources
 
-## validate-package <package_name>: 
+## validate-package <package_name>
 validazione delle risorse all'interno del package indicato. 
 Popolamento tabella resource_controls
 
