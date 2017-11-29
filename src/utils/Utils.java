@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package utils;
 
 import java.io.BufferedInputStream;
@@ -46,6 +41,7 @@ public class Utils {
             //verifica del response HTTP
             URL url = new URL(fileurl.replace(" ", "%20"));
             HttpURLConnection httpConn = (HttpURLConnection) url.openConnection();
+            httpConn.setConnectTimeout(5*1000);
             response_code = httpConn.getResponseCode();
             //always check HTTP response code first
             if( response_code == HttpURLConnection.HTTP_OK || (response_code >= 300 && response_code < 400)) {
@@ -84,7 +80,7 @@ public class Utils {
                 httpConn.disconnect();
             }
         }
-        catch(ConnectException e){
+        catch(Exception e){
             //connection timed out
             response_code = 408;
         }
