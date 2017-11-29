@@ -10,7 +10,8 @@ Viene usato dati.trentino.it come test.
 1. ant >= 1.9.9
 1. unzip
 
-## QUICK&DIRTY ##
+## Avvio quick&dirty ##
+(in pratica non serve molto ...)
 - compilazione
 - distribuzione
 - setup del database
@@ -24,7 +25,7 @@ inviare i comandi
 - initDB
 - validate-all-resources
 
-## TASK di ANT ##
+## task di ant ##
 # compilazione
 ant compila tutti i sorgenti java
 ```
