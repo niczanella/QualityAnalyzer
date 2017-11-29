@@ -1,56 +1,109 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<project default="create_run_jar" name="Create Runnable Jar for Project QualityAnalyzer with libraries in sub-folder">
-    <property name="dir.buildfile" value="."/>
-    <property name="dir.workspace" value="${dir.buildfile}/.."/>
-    <property name="dir.jarfile" value="${dir.buildfile}/dist"/>
-    <target name="create_run_jar">
-        <jar destfile="${dir.jarfile}/QualityAnalyzer.jar">
-            <manifest>
-                <attribute name="Main-Class" value="qualityanalyzer.QualityAnalyzer"/>
-                <attribute name="Class-Path" value=". QualityAnalyzer_lib/commons-io-2.5.jar QualityAnalyzer_lib/sqlite-jdbc-3.20.0.jar QualityAnalyzer_lib/slf4j-api-1.7.25.jar QualityAnalyzer_lib/json-simple-1.1.jar QualityAnalyzer_lib/commons-lang3-3.6.jar QualityAnalyzer_lib/org.apache.tika.parsers.jar QualityAnalyzer_lib/commons-codec-1.11.jar QualityAnalyzer_lib/commons-lang-2.6.jar QualityAnalyzer_lib/logback-classic-1.2.3.jar QualityAnalyzer_lib/javax.mail.jar QualityAnalyzer_lib/json-20070829.jar QualityAnalyzer_lib/logback-core-1.2.3.jar QualityAnalyzer_lib/simplemagic-1.11.jar QualityAnalyzer_lib/minimal-json-0.9.4.jar QualityAnalyzer_lib/nashorn.jar QualityAnalyzer_lib/rdf4j-model-2.2.2.jar QualityAnalyzer_lib/rdf4j-util-2.2.2.jar QualityAnalyzer_lib/rdf4j-rio-rdfxml-2.2.2.jar QualityAnalyzer_lib/rdf4j-rio-api-2.2.2.jar QualityAnalyzer_lib/sesame-util-4.0.1.jar QualityAnalyzer_lib/sesame-rio-api-4.0.1.jar QualityAnalyzer_lib/sesame-model-4.0.1.jar QualityAnalyzer_lib/jsr-275-1.0-beta-2.jar QualityAnalyzer_lib/gt-opengis-18.0.jar QualityAnalyzer_lib/jts-core-1.14.0.jar QualityAnalyzer_lib/gt-metadata-18.0.jar QualityAnalyzer_lib/core-0.26.jar QualityAnalyzer_lib/gt-referencing-18.0.jar QualityAnalyzer_lib/gt-api-18.0.jar QualityAnalyzer_lib/gt-main-18.0.jar QualityAnalyzer_lib/hsqldb-2.3.0.jar QualityAnalyzer_lib/gt-epsg-hsql-18.0.jar QualityAnalyzer_lib/gt-epsg-extension-18.0.jar QualityAnalyzer_lib/gt-geojson-18.0.jar QualityAnalyzer_lib/gt-data-18.0.jar QualityAnalyzer_lib/gt-geojsondatastore-18.0.jar QualityAnalyzer_lib/gt-jts-wrapper-18.0.jar QualityAnalyzer_lib/gt-geometry-18.0.jar QualityAnalyzer_lib/gt-shapefile-18.0.jar"/>
-            </manifest>
-            <fileset dir="${dir.buildfile}/bin"/>
-        </jar>
-        <delete dir="${dir.jarfile}/QualityAnalyzer_lib"/>
-        <mkdir dir="${dir.jarfile}/QualityAnalyzer_lib"/>
-        <copy file="${dir.buildfile}/lib/commons-io-2.5.jar" todir="${dir.jarfile}/QualityAnalyzer_lib"/>
-        <copy file="${dir.buildfile}/lib/sqlite-jdbc-3.20.0.jar" todir="${dir.jarfile}/QualityAnalyzer_lib"/>
-        <copy file="${dir.buildfile}/lib/slf4j-api-1.7.25.jar" todir="${dir.jarfile}/QualityAnalyzer_lib"/>
-        <copy file="${dir.buildfile}/lib/json-simple-1.1.jar" todir="${dir.jarfile}/QualityAnalyzer_lib"/>
-        <copy file="${dir.buildfile}/lib/commons-lang3-3.6.jar" todir="${dir.jarfile}/QualityAnalyzer_lib"/>
-        <copy file="${dir.buildfile}/lib/org.apache.tika.parsers.jar" todir="${dir.jarfile}/QualityAnalyzer_lib"/>
-        <copy file="${dir.buildfile}/lib/commons-codec-1.11.jar" todir="${dir.jarfile}/QualityAnalyzer_lib"/>
-        <copy file="${dir.buildfile}/lib/commons-lang-2.6.jar" todir="${dir.jarfile}/QualityAnalyzer_lib"/>
-        <copy file="${dir.buildfile}/lib/logback-classic-1.2.3.jar" todir="${dir.jarfile}/QualityAnalyzer_lib"/>
-        <copy file="${dir.buildfile}/lib/javax.mail.jar" todir="${dir.jarfile}/QualityAnalyzer_lib"/>
-        <copy file="${dir.buildfile}/lib/json-20070829.jar" todir="${dir.jarfile}/QualityAnalyzer_lib"/>
-        <copy file="${dir.buildfile}/lib/logback-core-1.2.3.jar" todir="${dir.jarfile}/QualityAnalyzer_lib"/>
-        <copy file="${dir.buildfile}/lib/simplemagic-1.11.jar" todir="${dir.jarfile}/QualityAnalyzer_lib"/>
-        <copy file="${dir.buildfile}/lib/minimal-json-0.9.4.jar" todir="${dir.jarfile}/QualityAnalyzer_lib"/>
-        <copy file="${dir.buildfile}/lib/nashorn.jar" todir="${dir.jarfile}/QualityAnalyzer_lib"/>
-        <copy file="${dir.buildfile}/lib/rdf4j/rdf4j-model-2.2.2.jar" todir="${dir.jarfile}/QualityAnalyzer_lib"/>
-        <copy file="${dir.buildfile}/lib/rdf4j/rdf4j-util-2.2.2.jar" todir="${dir.jarfile}/QualityAnalyzer_lib"/>
-        <copy file="${dir.buildfile}/lib/rdf4j/rdf4j-rio-rdfxml-2.2.2.jar" todir="${dir.jarfile}/QualityAnalyzer_lib"/>
-        <copy file="${dir.buildfile}/lib/rdf4j/rdf4j-rio-api-2.2.2.jar" todir="${dir.jarfile}/QualityAnalyzer_lib"/>
-        <copy file="${dir.buildfile}/lib/sesame/sesame-util-4.0.1.jar" todir="${dir.jarfile}/QualityAnalyzer_lib"/>
-        <copy file="${dir.buildfile}/lib/sesame/sesame-rio-api-4.0.1.jar" todir="${dir.jarfile}/QualityAnalyzer_lib"/>
-        <copy file="${dir.buildfile}/lib/sesame/sesame-model-4.0.1.jar" todir="${dir.jarfile}/QualityAnalyzer_lib"/>
-        <copy file="${dir.buildfile}/lib/geo/jsr-275-1.0-beta-2.jar" todir="${dir.jarfile}/QualityAnalyzer_lib"/>
-        <copy file="${dir.buildfile}/lib/geo/gt-opengis-18.0.jar" todir="${dir.jarfile}/QualityAnalyzer_lib"/>
-        <copy file="${dir.buildfile}/lib/geo/jts-core-1.14.0.jar" todir="${dir.jarfile}/QualityAnalyzer_lib"/>
-        <copy file="${dir.buildfile}/lib/geo/gt-metadata-18.0.jar" todir="${dir.jarfile}/QualityAnalyzer_lib"/>
-        <copy file="${dir.buildfile}/lib/geo/core-0.26.jar" todir="${dir.jarfile}/QualityAnalyzer_lib"/>
-        <copy file="${dir.buildfile}/lib/geo/gt-referencing-18.0.jar" todir="${dir.jarfile}/QualityAnalyzer_lib"/>
-        <copy file="${dir.buildfile}/lib/geo/gt-api-18.0.jar" todir="${dir.jarfile}/QualityAnalyzer_lib"/>
-        <copy file="${dir.buildfile}/lib/geo/gt-main-18.0.jar" todir="${dir.jarfile}/QualityAnalyzer_lib"/>
-        <copy file="${dir.buildfile}/lib/geo/hsqldb-2.3.0.jar" todir="${dir.jarfile}/QualityAnalyzer_lib"/>
-        <copy file="${dir.buildfile}/lib/geo/gt-epsg-hsql-18.0.jar" todir="${dir.jarfile}/QualityAnalyzer_lib"/>
-        <copy file="${dir.buildfile}/lib/geo/gt-epsg-extension-18.0.jar" todir="${dir.jarfile}/QualityAnalyzer_lib"/>
-        <copy file="${dir.buildfile}/lib/geo/gt-geojson-18.0.jar" todir="${dir.jarfile}/QualityAnalyzer_lib"/>
-        <copy file="${dir.buildfile}/lib/geo/gt-data-18.0.jar" todir="${dir.jarfile}/QualityAnalyzer_lib"/>
-        <copy file="${dir.buildfile}/lib/geo/gt-geojsondatastore-18.0.jar" todir="${dir.jarfile}/QualityAnalyzer_lib"/>
-        <copy file="${dir.buildfile}/lib/geo/gt-jts-wrapper-18.0.jar" todir="${dir.jarfile}/QualityAnalyzer_lib"/>
-        <copy file="${dir.buildfile}/lib/geo/gt-geometry-18.0.jar" todir="${dir.jarfile}/QualityAnalyzer_lib"/>
-        <copy file="${dir.buildfile}/lib/geo/gt-shapefile-18.0.jar" todir="${dir.jarfile}/QualityAnalyzer_lib"/>
-    </target>
+<project default="QualityAnalyzer" name="QualityAnalyzer" basedir="."> 
+  <description>
+    a tool to check the data integrity of a CKAN open data portal
+  </description>
+	<property name="build" location="build"/>
+	<property name="dist"  location="dist"/>
+	<property name="src"   location="src"/>
+	<property name="jar_app" location="${dist}/QualityAnalyzer.jar"/>
+
+	<path id="master-classpath">
+		<fileset dir="lib">
+			<include name="*.jar"/>
+		</fileset>
+		<fileset dir="lib/geo">
+			<include name="*.jar"/>
+		</fileset>
+		<fileset dir="lib/rdf4j">
+			<include name="*.jar"/>
+		</fileset>
+		<fileset dir="lib/sesame">
+			<include name="*.jar"/>
+		</fileset>
+		<pathelement path="${build}"/>
+	</path>
+
+	<target name="QualityAnalyzer" depends="run"/>
+
+	<target name="init">
+		<mkdir dir="${build}"/>
+	</target>
+
+	<target name="compile" depends="init">
+		<javac destdir="${build}" encoding="utf-8" includeantruntime="false">
+			<src path="${src}"/>
+	  		<classpath refid="master-classpath"/>
+		</javac>
+	</target>
+
+	<target name="dist" depends="compile">
+		<jar jarfile="${jar_app}" basedir="${build}">
+			<manifest>
+				<attribute name="Main-Class" value="qualityanalyzer.QualityAnalyzer"/>
+				<attribute name="Class-Path" value=". QualityAnalyzer_lib/commons-io-2.5.jar QualityAnalyzer_lib/sqlite-jdbc-3.20.0.jar QualityAnalyzer_lib/slf4j-api-1.7.25.jar QualityAnalyzer_lib/json-simple-1.1.jar QualityAnalyzer_lib/commons-lang3-3.6.jar QualityAnalyzer_lib/org.apache.tika.parsers.jar QualityAnalyzer_lib/commons-codec-1.11.jar QualityAnalyzer_lib/commons-lang-2.6.jar QualityAnalyzer_lib/logback-classic-1.2.3.jar QualityAnalyzer_lib/javax.mail.jar QualityAnalyzer_lib/json-20070829.jar QualityAnalyzer_lib/logback-core-1.2.3.jar QualityAnalyzer_lib/simplemagic-1.11.jar QualityAnalyzer_lib/minimal-json-0.9.4.jar QualityAnalyzer_lib/nashorn.jar QualityAnalyzer_lib/rdf4j-model-2.2.2.jar QualityAnalyzer_lib/rdf4j-util-2.2.2.jar QualityAnalyzer_lib/rdf4j-rio-rdfxml-2.2.2.jar QualityAnalyzer_lib/rdf4j-rio-api-2.2.2.jar QualityAnalyzer_lib/sesame-util-4.0.1.jar QualityAnalyzer_lib/sesame-rio-api-4.0.1.jar QualityAnalyzer_lib/sesame-model-4.0.1.jar QualityAnalyzer_lib/jsr-275-1.0-beta-2.jar QualityAnalyzer_lib/gt-opengis-18.0.jar QualityAnalyzer_lib/jts-core-1.14.0.jar QualityAnalyzer_lib/gt-metadata-18.0.jar QualityAnalyzer_lib/core-0.26.jar QualityAnalyzer_lib/gt-referencing-18.0.jar QualityAnalyzer_lib/gt-api-18.0.jar QualityAnalyzer_lib/gt-main-18.0.jar QualityAnalyzer_lib/hsqldb-2.3.0.jar QualityAnalyzer_lib/gt-epsg-hsql-18.0.jar QualityAnalyzer_lib/gt-epsg-extension-18.0.jar QualityAnalyzer_lib/gt-geojson-18.0.jar QualityAnalyzer_lib/gt-data-18.0.jar QualityAnalyzer_lib/gt-geojsondatastore-18.0.jar QualityAnalyzer_lib/gt-jts-wrapper-18.0.jar QualityAnalyzer_lib/gt-geometry-18.0.jar QualityAnalyzer_lib/gt-shapefile-18.0.jar"/>
+			</manifest>
+			<fileset dir="${build}"/>
+		</jar>
+		<delete dir="${dist}/QualityAnalyzer_lib"/>
+		<mkdir dir="${dist}/QualityAnalyzer_lib"/>
+		<copy file="lib/commons-io-2.5.jar" todir="${dist}/QualityAnalyzer_lib"/>
+		<copy file="lib/sqlite-jdbc-3.20.0.jar" todir="${dist}/QualityAnalyzer_lib"/>
+		<copy file="lib/slf4j-api-1.7.25.jar" todir="${dist}/QualityAnalyzer_lib"/>
+		<copy file="lib/json-simple-1.1.jar" todir="${dist}/QualityAnalyzer_lib"/>
+		<copy file="lib/commons-lang3-3.6.jar" todir="${dist}/QualityAnalyzer_lib"/>
+		<copy file="lib/org.apache.tika.parsers.jar" todir="${dist}/QualityAnalyzer_lib"/>
+		<copy file="lib/commons-codec-1.11.jar" todir="${dist}/QualityAnalyzer_lib"/>
+		<copy file="lib/commons-lang-2.6.jar" todir="${dist}/QualityAnalyzer_lib"/>
+		<copy file="lib/logback-classic-1.2.3.jar" todir="${dist}/QualityAnalyzer_lib"/>
+		<copy file="lib/javax.mail.jar" todir="${dist}/QualityAnalyzer_lib"/>
+		<copy file="lib/json-20070829.jar" todir="${dist}/QualityAnalyzer_lib"/>
+		<copy file="lib/logback-core-1.2.3.jar" todir="${dist}/QualityAnalyzer_lib"/>
+		<copy file="lib/simplemagic-1.11.jar" todir="${dist}/QualityAnalyzer_lib"/>
+		<copy file="lib/minimal-json-0.9.4.jar" todir="${dist}/QualityAnalyzer_lib"/>
+		<copy file="lib/nashorn.jar" todir="${dist}/QualityAnalyzer_lib"/>
+		<copy file="lib/rdf4j/rdf4j-model-2.2.2.jar" todir="${dist}/QualityAnalyzer_lib"/>
+		<copy file="lib/rdf4j/rdf4j-util-2.2.2.jar" todir="${dist}/QualityAnalyzer_lib"/>
+		<copy file="lib/rdf4j/rdf4j-rio-rdfxml-2.2.2.jar" todir="${dist}/QualityAnalyzer_lib"/>
+		<copy file="lib/rdf4j/rdf4j-rio-api-2.2.2.jar" todir="${dist}/QualityAnalyzer_lib"/>
+		<copy file="lib/sesame/sesame-util-4.0.1.jar" todir="${dist}/QualityAnalyzer_lib"/>
+		<copy file="lib/sesame/sesame-rio-api-4.0.1.jar" todir="${dist}/QualityAnalyzer_lib"/>
+		<copy file="lib/sesame/sesame-model-4.0.1.jar" todir="${dist}/QualityAnalyzer_lib"/>
+		<copy file="lib/geo/jsr-275-1.0-beta-2.jar" todir="${dist}/QualityAnalyzer_lib"/>
+		<copy file="lib/geo/gt-opengis-18.0.jar" todir="${dist}/QualityAnalyzer_lib"/>
+		<copy file="lib/geo/jts-core-1.14.0.jar" todir="${dist}/QualityAnalyzer_lib"/>
+		<copy file="lib/geo/gt-metadata-18.0.jar" todir="${dist}/QualityAnalyzer_lib"/>
+		<copy file="lib/geo/core-0.26.jar" todir="${dist}/QualityAnalyzer_lib"/>
+		<copy file="lib/geo/gt-referencing-18.0.jar" todir="${dist}/QualityAnalyzer_lib"/>
+		<copy file="lib/geo/gt-api-18.0.jar" todir="${dist}/QualityAnalyzer_lib"/>
+		<copy file="lib/geo/gt-main-18.0.jar" todir="${dist}/QualityAnalyzer_lib"/>
+		<copy file="lib/geo/hsqldb-2.3.0.jar" todir="${dist}/QualityAnalyzer_lib"/>
+		<copy file="lib/geo/gt-epsg-hsql-18.0.jar" todir="${dist}/QualityAnalyzer_lib"/>
+		<copy file="lib/geo/gt-epsg-extension-18.0.jar" todir="${dist}/QualityAnalyzer_lib"/>
+		<copy file="lib/geo/gt-geojson-18.0.jar" todir="${dist}/QualityAnalyzer_lib"/>
+		<copy file="lib/geo/gt-data-18.0.jar" todir="${dist}/QualityAnalyzer_lib"/>
+		<copy file="lib/geo/gt-geojsondatastore-18.0.jar" todir="${dist}/QualityAnalyzer_lib"/>
+		<copy file="lib/geo/gt-jts-wrapper-18.0.jar" todir="${dist}/QualityAnalyzer_lib"/>
+		<copy file="lib/geo/gt-geometry-18.0.jar" todir="${dist}/QualityAnalyzer_lib"/>
+		<copy file="lib/geo/gt-shapefile-18.0.jar" todir="${dist}/QualityAnalyzer_lib"/>
+	</target>
+
+	<target name="clean">
+		<delete dir="${build}"/>
+		<delete dir="${dist}"/>
+		<delete file="db.sqlite"/>
+		<delete file="papaparse.js"/>
+	</target>
+	
+	<target name="setup" depends="dist">
+		<exec executable="/bin/bash">
+			<arg value="setup.sh"/>
+		</exec>
+	</target>
+	
+	<target name="run" depends="setup">
+		<java jar="dist/QualityAnalyzer.jar" fork="true"/>
+	</target>
+	
 </project>
+
