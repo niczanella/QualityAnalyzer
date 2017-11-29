@@ -1,35 +1,30 @@
-#### About
+# About
 
 Software java da command line per l'analisi dei dati presenti su un catalogo open data basato su ckan.
 Viene usato dati.trentino.it come test.
 
 
-**Pre-requisiti:**
+## Pre-requisiti
 
-  * libreria spatialite >= 4.3.0
-  * spatialite-tool >= 4.3.0
-  * java >= 1.8
-  * ant >= 1.9.9
-  * unzip
+1. libreria spatialite >= 4.3.0
+1. spatialite-tool >= 4.3.0
+1. java >= 1.8
+1. ant >= 1.9.9
+1. unzip
 
+## QUICK&DIRTY ##
+- compilazione
+- distribuzione
+- setup del database
+- avvio del programma
+... semplicemente digita:
 
-**INSTALLAZIONE**
-
-Da una bash shell eseguire le seguenti istruzioni:
-
- * sh setup.sh
-
-Lo script genera un file sqlite, con estensioni spaziali, arricchito dagli shapefile ISTAT dei limiti amministrativi (regioni, province e comuni) al 2016 e il setup delle tabelle usate dal programma.
-Nello specifico:
- * viene creato il database sqlite e inizializzate le relative tabelle, su cui verranno salvati i risultati delle analisi
- * viene scaricato e aggiunto al database lo shape file che descrive i confini delle regioni, province e comuni del territorio italiano
-
-Una volta che il file sqlite è stato generato si può procedere alla compilazione della parte java attraverso questo comando:
- * ant
-
-Il programma va eseguito usando questo comando
-
- * java -jar dist/QualityAnalyzer.jar
+```
+ant
+```
+inviare i comandi
+- initDB
+- validate-all-resources
 
 All'interno del programma i comandi disponibili sono i seguenti:
 
