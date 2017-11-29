@@ -26,14 +26,70 @@ inviare i comandi
 - initDB
 - validate-all-resources
 
-All'interno del programma i comandi disponibili sono i seguenti:
+## TASK di ANT ##
+# compilazione
+ant compila tutti i sorgenti java
+```
+ant compile
+```
+# distribuzione
+ant genera nella directory dist il pacchetto jar necessario e copia le librerie dipendenti
+```
+ant dist
+```
+# setup
+ant invoca lo script *setup.sh* che si occupa di inizializzare il file sqlite db.sqlite creando tabelle e popolandole con dati ISTAT dei limiti amministrativi
+```
+ant setup
+```
+... in alternativa eseguire il comando bash in questo modo
+```
+chmod 755 setup.sh
+./setup.sh
+```
 
- * **initDB**: popolamento database da "http://dati.trentino.it" da zero (vengono eliminati tutti i dati già presenti). Tabelle: dataset, resource, res_in_dataset, organization, org_in_dataset, dataset_is_updated
- * **continue-initDB**: completamento della procedura di inizializzazione del database
- * **validate-email**: verifica della correttezza sintattica delle e-mail fornite nei metadati relativi ai dataset. Popolamento tabella email_verification (vengono eliminati i dati già presenti)
- * **continue-validate-email**: completamento procedura validate-email.
- * **validate-all-resources**: validazione di tutte le risorse contenute nel database. Popolamento tabella resource_controls da zero (vengono eliminati i dati già presenti)
- * **continue-validate-all-resources**: completamento procedura validate-all-resources
- * **validate-package <package_name>**: validazione delle risorse all'interno del package indicato. Popolamento tabella resource_controls
- * **info**: questo messaggio
- * **exit**: uscita dal programma
+# esecuzione
+```
+ant run
+```
+# pulizia
+```
+ant clean
+```
+
+# Comandi per QualityAnalyzer
+
+## initDB 
+popolamento database da http://dati.trentino.it da zero (vengono eliminati tutti i dati già presenti). 
+Tabelle: 
+dataset, resource, res_in_dataset, organization, org_in_dataset, dataset_is_updated
+
+## continue-initDB 
+completamento della procedura di inizializzazione del database
+
+## validate-email
+verifica della correttezza sintattica delle e-mail fornite nei metadati relativi ai dataset. 
+Popolamento tabella email_verification (vengono eliminati i dati già presenti)
+
+## continue-validate-email
+completamento procedura validate-email.
+
+## validate-all-resources
+validazione di tutte le risorse contenute nel database. 
+Popolamento tabella resource_controls da zero (vengono eliminati i dati già presenti)
+
+## continue-validate-all-resources 
+completamento procedura validate-all-resources
+
+## validate-package <package_name>
+validazione delle risorse all'interno del package indicato. 
+Popolamento tabella resource_controls
+
+## info 
+questo messaggio
+
+## exit 
+uscita dal programma
+
+# ESEMPI
+TODO
