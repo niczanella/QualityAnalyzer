@@ -1,4 +1,5 @@
 DB="db.sqlite"
+cd files
 if [ -s $DB ]; 
 	then 
 		echo "setup non necessario"; 

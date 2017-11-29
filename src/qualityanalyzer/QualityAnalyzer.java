@@ -53,12 +53,12 @@ public class QualityAnalyzer {
         
         Scanner sc = new Scanner(System.in);
         
-        if(!new File(new File(QualityAnalyzer.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath()).getParentFile().getParent()+"/db.sqlite").exists()) {
+        if(!new File(new File(QualityAnalyzer.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath()).getParentFile().getParent()+"/files/db.sqlite").exists()) {
         	System.err.println("Errore, eseguire installazione e riavviare il programma");
         	System.exit(0);
         }
         
-        String info = FileUtils.readFileToString(new File(new File(QualityAnalyzer.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath()).getParentFile().getParent()+"/comandi.txt")).trim();
+        String info = FileUtils.readFileToString(new File(new File(QualityAnalyzer.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath()).getParentFile().getParent()+"/files/comandi.txt")).trim();
         
         System.out.println(info);
         System.out.println();

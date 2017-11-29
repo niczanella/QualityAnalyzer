@@ -38,7 +38,7 @@ public class PapaParse {
     public boolean Parse(String filename, List<Coordinate> coordinates) throws FileNotFoundException, ScriptException, URISyntaxException, IOException{
         ScriptEngineManager mgr = new ScriptEngineManager();
         ScriptEngine jsEngine = mgr.getEngineByName("JavaScript");
-        jsEngine.eval(new java.io.FileReader(new File(PapaParse.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath()).getParentFile().getParent() + "/papaparse.js"));
+        jsEngine.eval(new java.io.FileReader(new File(PapaParse.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath()).getParentFile().getParent() + "/files/papaparse.js"));
                 
         String csv = fileToString(filename);
         if(isIs_empty()){

@@ -31,7 +31,7 @@ public class DBManager {
     String classpath;
     
     public DBManager() throws URISyntaxException{
-        classpath = new File(DBManager.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath()).getParentFile().getParent();
+        classpath = new File(DBManager.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath()).getParentFile().getParent() + "/files";
     }
         
     

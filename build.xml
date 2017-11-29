@@ -91,8 +91,8 @@
 	<target name="clean">
 		<delete dir="${build}"/>
 		<delete dir="${dist}"/>
-		<delete file="db.sqlite"/>
-		<delete file="papaparse.js"/>
+		<delete file="files/db.sqlite"/>
+		<delete file="files/papaparse.js"/>
 	</target>
 	
 	<target name="setup" depends="dist">
