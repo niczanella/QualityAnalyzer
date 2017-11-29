@@ -11,6 +11,7 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.net.ConnectException;
 import java.net.HttpURLConnection;
+import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -80,7 +81,7 @@ public class Utils {
                 httpConn.disconnect();
             }
         }
-        catch(Exception e){
+        catch(SocketTimeoutException e){
             //connection timed out
             response_code = 408;
         }
