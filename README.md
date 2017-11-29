@@ -25,6 +25,19 @@ inviare i comandi
 - initDB
 - validate-all-resources
 
+# Esecuzione di QualityAnalyzer senza passare da ANT
+- creare pacchetto distribuzione 
+```
+ant dist
+```
+- eseguire da bash 
+```
+java -jar dist/QualityAnalyzer.jar
+```
+- inviare in sequenza i comandi: 
+*initDB* e *validate-all-resources*
+
+
 ## task di ant 
 ### compilazione
 ant compila tutti i sorgenti java
