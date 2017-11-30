@@ -45,11 +45,11 @@ contiene l'elenco dei package ottenuti interrogando il catalogo
 - *publisher_identifier* => 
 - *geographical_name* => 
 - *license_url* => url della licenza con cui viene rilasciato il package
-- *title* => 
+- *title* => titolo del package
 - *revision_id* => 
-- *identifier* => 
-- *creator_name* => 
-- *creator_identifier* => 
+- *identifier* => altro identificativo del package
+- *creator_name* => nome del creatore del package
+- *creator_identifier* => identificativo del creatore del package
 - *conforms_to* => 
 - *language* => 
 - *alternate_identifier* => 
