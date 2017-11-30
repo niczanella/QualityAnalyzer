@@ -23,7 +23,7 @@ import utils.ResourceControls;
 
 /**
  *
- * @author nicola zanella
+ * @author nicola
  */
 public class QualityAnalyzer {
 
