@@ -1,24 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package qualityanalyzer;
 
 import utils.DateAnalyzer;
 import dbUtils.DBManager;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
-import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
-import java.net.URL;
-import java.text.ParseException;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
@@ -35,7 +23,7 @@ import utils.ResourceControls;
 
 /**
  *
- * @author nicola
+ * @author nicola zanella
  */
 public class QualityAnalyzer {
 
@@ -78,22 +66,6 @@ public class QualityAnalyzer {
                 l.removeAll(manager.getDatasetNames());
                 initDB(l);
                 System.out.println("DB inizializzato");
-                System.out.println();
-            }
-            
-            else if(input.equals("validate-email")){
-                manager.deleteTable("email_verification");                
-                List<String> l = manager.getDatasetNames();
-                initTableEmailVerification(l);
-                System.out.println("Validazione completata");
-                System.out.println();
-            }
-            
-            else if(input.equals("continue-validate-email")){
-                List<String> l = manager.getDatasetNames();
-                l.removeAll(manager.getNamesEmailChecked());
-                initTableEmailVerification(l);
-                System.out.println("Validazione completata");
                 System.out.println();
             }
             
@@ -209,7 +181,11 @@ public class QualityAnalyzer {
                 //popolamento tabella dataset_is_updated
                 String result = da.isUpdated(d);
                 manager.insertDataset_is_updated(d.getId(), result);
-
+                
+                //popolamento tabella email_verification
+                String [] emailResults = checkemail(d);
+                manager.insertEmailVerification(d.getId(), emailResults[0], emailResults[1], emailResults[2]);
+                
                 //popolamento tabelle resource e res_in_dataset
                 for(Resource r : d.getResources()){
                     manager.insertResource(r);
@@ -222,55 +198,40 @@ public class QualityAnalyzer {
         }
     }
     
-    public static void initTableEmailVerification(List <String> l) throws URISyntaxException{
-        DBManager manager = new DBManager();
+    public static String [] checkemail(Dataset d){
+        String maintainer_result="NOT VALID";
+        String author_result="NOT VALID";
+        String contact_result="NOT VALID";
         EmailChecker ec = new EmailChecker();
         
-        String maintainer_result;
-        String author_result;
-        String contact_result;
-        int index=1, listSize = l.size();
-        for(String s : l){
-            System.out.println("Package [" +index++ +"/"+ listSize + "] " + s);
-            try{
-                maintainer_result="NOT VALID";
-                author_result="NOT VALID";
-                contact_result="NOT VALID";
-                
-                Dataset d = manager.getDatasetFromName(s);
-                
-                if(d.getMaintainer_email()!=null){
-                    if(ec.isValidEmailAddress(d.getMaintainer_email())){
-                        maintainer_result = "OK";
-                    }
-                }
-                else{
-                    maintainer_result = "NULL";
-                }
-                
-                if(d.getAuthor_email()!=null){
-                    if(ec.isValidEmailAddress(d.getAuthor_email())){
-                        author_result = "OK";
-                    }
-                }
-                else{
-                    author_result = "NULL";
-                }
-                
-                if(d.getContact()!=null){
-                    if(ec.isValidEmailAddress(d.getContact())){
-                        contact_result = "OK";
-                    }
-                }  
-                else{
-                    contact_result = "NULL";
-                }
-                
-                manager.insertEmailVerification(d.getId(), author_result, maintainer_result, contact_result);
-            }
-            catch(Exception e){
-                //System.err.println(s + " ERRORE \n" + e.toString());
+        if(d.getMaintainer_email()!=null){
+            if(ec.isValidEmailAddress(d.getMaintainer_email())){
+                maintainer_result = "OK";
             }
         }
+        else{
+            maintainer_result = "NULL";
+        }
+
+        if(d.getAuthor_email()!=null){
+            if(ec.isValidEmailAddress(d.getAuthor_email())){
+                author_result = "OK";
+            }
+        }
+        else{
+            author_result = "NULL";
+        }
+
+        if(d.getContact()!=null){
+            if(ec.isValidEmailAddress(d.getContact())){
+                contact_result = "OK";
+            }
+        }  
+        else{
+            contact_result = "NULL";
+        }
+        
+        String [] results = {author_result, maintainer_result, contact_result};
+        return results;
     }
 }

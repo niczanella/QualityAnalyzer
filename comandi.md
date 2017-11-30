@@ -1,19 +1,12 @@
 # Comandi
 
 ## initDB 
-popolamento database da http://dati.trentino.it da zero (vengono eliminati tutti i dati già presenti). 
+popolamento database da http://dati.trentino.it da zero (vengono eliminati tutti i dati già presenti) con verifica della correttezza sintattica delle e-mail fornite nei metadati relativi ai dataset e verifica del corretto aggiornamento dei dataset in base a quanto dichiarato nei metadati. 
 Tabelle: 
 dataset, resource, res_in_dataset, organization, org_in_dataset, dataset_is_updated
 
 ## continue-initDB 
 completamento della procedura di inizializzazione del database
-
-## validate-email
-verifica della correttezza sintattica delle e-mail fornite nei metadati relativi ai dataset. 
-Popolamento tabella email_verification (vengono eliminati i dati già presenti)
-
-## continue-validate-email
-completamento procedura validate-email.
 
 ## validate-all-resources
 validazione di tutte le risorse contenute nel database. 
