@@ -10,8 +10,8 @@ contiene l'elenco dei cataloghi
 contiene l'elenco dei package ottenuti interrogando il catalogo
 - *id* => id del package, chiave primaria della tabella
 - *license_title* => titolo della licenza con cui viene rilasciato il package
-- *maintainer* => 
-- *encoding* => 
+- *maintainer* => manutentore del dataset
+- *encoding* => codifica caratteri
 - *issued* => 
 - *temporal_start* => 
 - *private* => 
