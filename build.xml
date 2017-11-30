@@ -92,6 +92,7 @@
 		<delete dir="${build}"/>
 		<delete dir="${dist}"/>
         <delete dir="resources"/>
+        <delete dir="rdf"/>
 		<delete file="files/db.sqlite"/>
 		<delete file="files/papaparse.js"/>
 	</target>

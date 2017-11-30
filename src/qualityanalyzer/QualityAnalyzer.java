@@ -69,6 +69,22 @@ public class QualityAnalyzer {
                 System.out.println();
             }
             
+            else if(input.equals("init-and-validate")){
+                manager.deleteTables();
+                List<String> l = c.getDatasetList();
+                initAndValidate(l);
+                System.out.println("Esecuzione terminata");
+                System.out.println();
+            }
+            
+            else if(input.equals("continue-init-and-validate")){
+                List<String> l = c.getDatasetList();
+                l.removeAll(manager.getDatasetNames());
+                initAndValidate(l);
+                System.out.println("Esecuzione terminata");
+                System.out.println();
+            }
+            
             else if(input.contains("validate-package ")){
                 String dataset_name = input.replace("validate-package ", "");
                 Dataset d = manager.getDatasetFromName(dataset_name);
@@ -145,6 +161,63 @@ public class QualityAnalyzer {
             }
             catch(IOException | ScriptException | ParserConfigurationException | SAXException e){
                 System.err.println(r.getId() + e);
+            }
+        }
+    }
+    
+    public static void initAndValidate(List <String> listDataset) throws Exception{
+        da = new DateAnalyzer();
+        int index=1;
+        int listSize = listDataset.size();
+        for(String s:listDataset){
+            Dataset d;
+            
+            try{
+                d = new Dataset(c.getPortalUrl(), c.getApi3UrlDatasetShow(), s);
+                
+            }
+            catch(IOException e){
+                //API2
+                d = new Dataset(c.getPortalUrl(), c.getApi2UrlDatasetShow(), s);
+            }
+            
+            if(d.getType().equals("dataset")){
+                System.out.println("Package [" +index++ +"/"+ listSize + "] " + s);
+                
+                DBManager manager = new DBManager();
+                //popolamento tabella dataset
+                manager.insertDataset(d);
+
+                //popolamento tabella organization
+                manager.insertOrganization(d.getOrganization());
+
+                //popolamento tabella org_in_dataset
+                manager.insertOrg_in_dataset(d.getId(), d.getOrganization().getId());
+
+                //popolamento tabella dataset_is_updated
+                String result = da.isUpdated(d);
+                manager.insertDataset_is_updated(d.getId(), result);
+                
+                //popolamento tabella email_verification
+                String [] emailResults = checkemail(d);
+                manager.insertEmailVerification(d.getId(), emailResults[0], emailResults[1], emailResults[2]);
+                
+                //popolamento tabelle resource e res_in_dataset
+                int resIndex = 1, resSize=d.getResources().size();
+                for(Resource r : d.getResources()){
+                    System.out.println("Risorsa [" +resIndex++ +"/"+ resSize + "] " + " - " + r.getName());
+                    manager.insertResource(r);
+                    manager.insertRes_in_dataset(d.getId(), r.getId());
+                    try{
+                        ResourceControls rc = new ResourceControls(r, d.getEncoding(), d.getGeographical_geonames_url());
+                    }
+                    catch(IOException | ScriptException | ParserConfigurationException | SAXException e){
+                        System.err.println(s + " ERRORE \n" + e.toString() + "\n----------------------");
+                    }
+                }
+            }
+            else{
+                System.err.println("Package [" +index++ +"/"+ listSize + "] " + s + " - " + d.getType() + ", non aggiunto.");
             }
         }
     }

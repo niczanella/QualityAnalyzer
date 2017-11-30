@@ -42,7 +42,7 @@ public class Utils {
             //verifica del response HTTP
             URL url = new URL(fileurl.replace(" ", "%20"));
             HttpURLConnection httpConn = (HttpURLConnection) url.openConnection();
-            httpConn.setConnectTimeout(5*1000);
+            httpConn.setConnectTimeout(10*1000);
             response_code = httpConn.getResponseCode();
             //always check HTTP response code first
             if( response_code == HttpURLConnection.HTTP_OK || (response_code >= 300 && response_code < 400)) {

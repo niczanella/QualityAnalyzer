@@ -2,6 +2,8 @@
 
 initDB: popolamento database da "http://dati.trentino.it" da zero (vengono eliminati tutti i dati già presenti). Tabelle: dataset, resource, res_in_dataset, organization, org_in_dataset, dataset_is_updated
 continue-initDB: completamento della procedura di inizializzazione del database
+init-and-validate: procedura di inizializzazione del database (initDB) e di validazione delle risorse (validate-all-resources)
+continue-init-and-validate: continuazione della procedura init-and-validate
 validate-all-resources: validazione di tutte le risorse contenute nel database. Popolamento tabella resource_controls da zero (vengono eliminati i dati già presenti)
 continue-validate-all-resources: completamento procedura validate-all-resources
 validate-package <package_name>: validazione delle risorse all'interno del package indicato. Popolamento tabella resource_controls
