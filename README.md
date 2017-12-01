@@ -85,10 +85,6 @@ procedura di inizializzazione del database (initDB) e di validazione delle risor
 ## continue-init-and-validate
 continuazione della procedura init-and-validate
 
-## validate-email
-verifica della correttezza sintattica delle e-mail fornite nei metadati relativi ai dataset. 
-Popolamento tabella email_verification (vengono eliminati i dati già presenti)
-
 ## validate-all-resources
 validazione di tutte le risorse contenute nel database. 
 Popolamento tabella resource_controls da zero (vengono eliminati i dati già presenti)
