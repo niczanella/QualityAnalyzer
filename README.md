@@ -21,9 +21,8 @@ Viene usato dati.trentino.it come test.
 ```
 ant
 ```
-inviare i comandi
-- initDB
-- validate-all-resources
+inviare il comando
+- init-and-validate
 
 # Esecuzione di QualityAnalyzer senza passare da ANT
 - creare pacchetto distribuzione 
@@ -34,8 +33,8 @@ ant dist
 ```
 java -jar dist/QualityAnalyzer.jar
 ```
-- inviare in sequenza i comandi: 
-*initDB* e *validate-all-resources*
+- inviare il comando: 
+*init-and-validate*
 
 
 ## task di ant 
@@ -71,26 +70,13 @@ ant clean
 
 # Comandi per QualityAnalyzer
 
-## initDB
-popolamento database da http://dati.trentino.it da zero (vengono eliminati tutti i dati già presenti) con verifica della correttezza sintattica delle e-mail fornite nei metadati relativi ai dataset e verifica del corretto aggiornamento dei dataset in base a quanto dichiarato nei metadati. 
-Tabelle:
-dataset, resource, res_in_dataset, organization, org_in_dataset, dataset_is_updated, email_verification
-
-## continue-initDB 
-completamento della procedura di inizializzazione del database
-
 ## init-and-validate
-procedura di inizializzazione del database (initDB) e di validazione delle risorse (validate-all-resources)
+procedura di inizializzazione del database da http://dati.trentino.it con verifica della correttezza sintattica delle e-mail fornite nei metadati relativi ai dataset e verifica del corretto aggiornamento dei dataset in base a quanto dichiarato nei metadati e validazione delle risorse.
+Tabelle:
+dataset, resource, res_in_dataset, organization, org_in_dataset, dataset_is_updated, email_verification, resource_controls
 
 ## continue-init-and-validate
 continuazione della procedura init-and-validate
-
-## validate-all-resources
-validazione di tutte le risorse contenute nel database. 
-Popolamento tabella resource_controls da zero (vengono eliminati i dati già presenti)
-
-## continue-validate-all-resources 
-completamento procedura validate-all-resources
 
 ## validate-package <package_name>
 validazione delle risorse all'interno del package indicato. 

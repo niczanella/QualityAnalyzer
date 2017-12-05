@@ -683,6 +683,32 @@ public class DBManager {
         }
     }
     
+    public void deleteDataset(String dataset_name){
+        String sql = "DELETE FROM dataset WHERE name = '" + dataset_name + "';";        
+        
+        try {
+            Connection conn = this.connect();
+            Statement stmt = conn.createStatement();
+            stmt.execute(sql);
+        }
+        catch (SQLException e) {
+            System.out.println("deleteDataset " + e.getMessage());
+        }
+    }
+    
+    public void deleteControlFromResId(String resource_id){
+        String sql = "DELETE FROM resource_controls WHERE resource_id = '" + resource_id + "';";        
+        
+        try {
+            Connection conn = this.connect();
+            Statement stmt = conn.createStatement();
+            stmt.execute(sql);
+        }
+        catch (SQLException e) {
+            System.out.println("deleteControlFromResId " + e.getMessage());
+        }
+    }
+    
     public List<String> getNamesEmailChecked() throws SQLException{
         String sql = "SELECT name FROM email_verification, dataset WHERE dataset.id = email_verification.dataset_id";        
         
