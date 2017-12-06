@@ -1,14 +1,7 @@
 # TABELLE
-## CATALOG
-contiene l'elenco dei cataloghi
-- *name* => nome del catalogo
-- *version* => versione del catalogo
-- *id* => viene usato dalla tabella **resource** come "id_catalog"
-
-
 ## DATASET
 contiene l'elenco dei package ottenuti interrogando il catalogo
-- *id* => id del package, chiave primaria della tabella
+- *id* => id del package, chiave primaria della tabella. Viene usato nelle tabelle res_in_dataset, org_in_dataset, dataset_is_updated e email_verification come "dataset_id"
 - *license_title* => titolo della licenza con cui viene rilasciato il package
 - *maintainer* => nome di chi si occupa del mantenimento del dataset
 - *encoding* => encoding dei caratteri con cui vengono rilasciati i dati
@@ -61,7 +54,7 @@ contiene l'elenco dei package ottenuti interrogando il catalogo
 
 ## RESOURCE
 contiene l'elenco delle risorse contenute nei package
-- *id* => id della risorsa, chiave primaria della tabella
+- *id* => id della risorsa, chiave primaria della tabella. Viene usato nelle tabelle res_in_dataset e resource_controls come resource_id
 - *cache_last_updated* => 
 - *package_id* => id del package in cui è contenuta la risorsa
 - *webstore_last_updated* => 
