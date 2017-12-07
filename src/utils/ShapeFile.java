@@ -79,8 +79,10 @@ public class ShapeFile {
             }
             if(numInvalidGeometries!=0)
                 log += "- Il file " + f.getName() + " contiene " + numInvalidGeometries + " geometrie invalide\n";
+            store.dispose();
         }
         correct = numInvalidGeometries==0 && geo.isCorrect();
+        
     }
     
     private int validateFeatureGeometry(SimpleFeatureSource featureSource, String shpName, List<Integer> distanze) throws IOException, FactoryException, MismatchedDimensionException, TransformException {
