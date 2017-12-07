@@ -80,7 +80,7 @@ continuazione della procedura init-and-validate
 
 ## validate-package <package_name>
 validazione delle risorse all'interno del package indicato. 
-Popolamento tabella resource_controls
+Inserimento nella tabella resource_controls
 
 ## info 
 questo messaggio
