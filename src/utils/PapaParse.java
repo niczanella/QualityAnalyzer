@@ -20,7 +20,6 @@ import java.net.URISyntaxException;
 import org.apache.commons.io.FileUtils;
 
 
-
 /**
  *
  * @author nicola
@@ -40,7 +39,7 @@ public class PapaParse {
             return false;
         }
         
-        String fun = "Papa.parse(\"" + csv + "\",{header: true, skipEmptyLines: true})";//skipEmptyLines: true
+        String fun = "Papa.parse(\"" + csv + "\",{header: true, skipEmptyLines: true})";
         
         JSObject result =  (JSObject) jsEngine.eval(fun);
         
@@ -71,7 +70,7 @@ public class PapaParse {
                     double y = Double.parseDouble(d.get("lat").toString());
                     coordinates.add(new Coordinate(y,x));
                 }
-                catch(NullPointerException e){
+                catch(Exception e){
                     
                 }
             }
@@ -108,21 +107,24 @@ public class PapaParse {
             String sCurrentLine;
             
             if((sCurrentLine = br.readLine()) != null){
-                csv +=sCurrentLine.replace("\\", "\\\\")+"\\n";
-                
-                while ((sCurrentLine = br.readLine()) != null) {
-                    csv +=sCurrentLine.replace("\\", "\\\\") + "\\n";
-                    
-                }
-                csv=csv.substring(0, csv.length()-2);
+                csv += sCurrentLine.replace("\\", "\\\\")+"\\n";
                 csv = csv.replace("\u2028", "\\n");
                 csv=csv.replace("\"", "\\\"");
+                
+                while ((sCurrentLine = br.readLine()) != null) {
+                    sCurrentLine = sCurrentLine.replace("\\", "\\\\");
+                    sCurrentLine = sCurrentLine.replace("\u2028", "\\n");
+                    sCurrentLine=sCurrentLine.replace("\"", "\\\"");
+
+                    csv += sCurrentLine + "\\n";
+                }
+                csv=csv.substring(0, csv.length()-2);
             }
             else{
                 setIs_empty(true);
             }            
         }
-        catch (IOException e) {}
+        catch (IOException e){}
         
         return csv;
     }

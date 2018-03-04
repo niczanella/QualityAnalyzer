@@ -42,7 +42,7 @@ public class DateAnalyzer{
             int dayDiff = (int)((diff/1000)/(60)/(60)/(24));
             if(FREQUENCY_MAP.containsKey(dataset.getFrequency())){
                 if(dayDiff <= FREQUENCY_MAP.get(dataset.getFrequency())){
-                    result = "YES";
+                    result = "SI";
                 }
                 else{
                     result = "NO";

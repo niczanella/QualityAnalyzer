@@ -34,6 +34,13 @@ import org.opengis.referencing.operation.TransformException;
  * @author nicola
  */
 public class ShapeFile {
+
+    /**
+     * @return the geo
+     */
+    public Geo getGeo() {
+        return geo;
+    }
     private String log = "";
     private boolean correct;
     private boolean shapefile;
@@ -75,13 +82,13 @@ public class ShapeFile {
             }
             
             if(geonamesUrl!=null){
-                log += geo.getLog();
+                log += getGeo().getLog();
             }
             if(numInvalidGeometries!=0)
                 log += "- Il file " + f.getName() + " contiene " + numInvalidGeometries + " geometrie invalide\n";
             store.dispose();
         }
-        correct = numInvalidGeometries==0 && geo.isCorrect();
+        correct = numInvalidGeometries==0;
         
     }
     
@@ -97,15 +104,15 @@ public class ShapeFile {
                 Geometry geom = (Geometry) feature.getDefaultGeometry();
                 
                 try {
-                    //a++;                    
-                    if(geom != null && geo.getGeonamesUrl()!=null){
-                        boolean insideGeometry = geo.containsGeometry(geom, crs);    
+                    //a++;
+                    if(geom != null && getGeo().getGeonamesUrl()!=null){
+                        boolean insideGeometry = getGeo().containsGeometry(geom, crs);    
 
                         if(!insideGeometry){
-                            boolean intersectGeometry = geo.intersectGeometry(geom);
+                            boolean intersectGeometry = getGeo().intersectGeometry(geom);
                             if(!intersectGeometry){
-                                geo.setCorrect(false);
-                                int dist = geo.getDistanceGeometry(geom);
+                                getGeo().setCorrect(false);
+                                int dist = getGeo().getDistanceGeometry(geom);
                                 if(dist!=0){
                                     distanze.add(dist);
                                 }

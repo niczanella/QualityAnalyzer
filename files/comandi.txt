@@ -1,7 +1,7 @@
 *Comandi:*
 
-init-and-validate: procedura di inizializzazione del database (initDB) e di validazione delle risorse (validate-all-resources)
+init-and-validate: procedura di inizializzazione del database e di validazione delle risorse
 continue-init-and-validate: continuazione della procedura init-and-validate
-validate-package <package_name>: validazione delle risorse all'interno del package indicato. Popolamento tabella resource_controls
+validate-package <package_name>: validazione delle risorse all'interno del package indicato
 info: questo messaggio
 exit: uscita dal programma

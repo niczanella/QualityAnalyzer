@@ -2,6 +2,7 @@ package nickan;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -13,6 +14,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import javax.net.ssl.HttpsURLConnection;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -93,6 +95,7 @@ public class Dataset {
     	
     }
     
+            
     public Dataset(String portalUrl, String apiUrl, String name) throws MalformedURLException, IOException, JSONException{
         
         this.portalUrl = portalUrl;
@@ -105,9 +108,22 @@ public class Dataset {
         boolean isApi3 = true;
         
         try{
-            HttpURLConnection httpConn = (HttpURLConnection) queryUrl.openConnection();
+            
+            
+            
+            InputStream input;
+        
+            if(portalUrl.contains("https")){
+                HttpsURLConnection httpsConn = (HttpsURLConnection) queryUrl.openConnection();
+                input = httpsConn.getInputStream();
+            }
 
-            try (BufferedReader in = new BufferedReader(new InputStreamReader(httpConn.getInputStream()))) {
+            else{
+                HttpURLConnection httpConn = (HttpURLConnection) queryUrl.openConnection();
+                input = httpConn.getInputStream();
+            }
+
+            try (BufferedReader in = new BufferedReader(new InputStreamReader(input))) {
                 String line = in.readLine();
                 if(new JSONObject(line).has("result")){
                     result = new JSONObject(new JSONObject(line).getString("result"));

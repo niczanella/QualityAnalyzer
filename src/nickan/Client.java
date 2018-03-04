@@ -2,12 +2,14 @@ package nickan;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.LinkedList;
 import java.util.List;
+import javax.net.ssl.HttpsURLConnection;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -31,13 +33,27 @@ public class Client {
     
     public List<String> getDatasetList() throws MalformedURLException, IOException, JSONException{
         URL queryUrl = new URL(getPortalUrl() + getApi3Url() + getPackage_list());
-        HttpURLConnection httpConn = (HttpURLConnection) queryUrl.openConnection();
+        
+                
+        InputStream input;
+        
+        if(portalUrl.contains("https")){
+            HttpsURLConnection httpsConn = (HttpsURLConnection) queryUrl.openConnection();
+            input = httpsConn.getInputStream();
+        }
+        
+        else{
+            HttpURLConnection httpConn = (HttpURLConnection) queryUrl.openConnection();
+            input = httpConn.getInputStream();
+        }
+        
+        
         
         JSONObject result;
         JSONArray j;
         List<String> datasetList=new LinkedList<>();
         
-        try (BufferedReader in = new BufferedReader(new InputStreamReader(httpConn.getInputStream()))) {
+        try (BufferedReader in = new BufferedReader(new InputStreamReader(input))) {
             
             result = new JSONObject(in.readLine());
             j=result.getJSONArray("result");

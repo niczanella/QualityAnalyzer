@@ -2,11 +2,13 @@ package nickan;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+import javax.net.ssl.HttpsURLConnection;
 import org.json.JSONException;
 import org.json.JSONObject;
 /**
@@ -201,10 +203,22 @@ public class Resource {
     }
     
     public Resource(URL jsonUrl) throws JSONException, IOException{
-        HttpURLConnection httpConn = (HttpURLConnection) jsonUrl.openConnection();
+        
         JSONObject result;
         
-        try (BufferedReader in = new BufferedReader(new InputStreamReader(httpConn.getInputStream()))) {
+        InputStream input;
+        
+        if(jsonUrl.toString().contains("https")){
+            HttpsURLConnection httpsConn = (HttpsURLConnection) jsonUrl.openConnection();
+             input = httpsConn.getInputStream();
+        }
+
+        else{
+            HttpURLConnection httpConn = (HttpURLConnection) jsonUrl.openConnection();
+            input = httpConn.getInputStream();
+        }
+        
+        try (BufferedReader in = new BufferedReader(new InputStreamReader(input))) {
             result = new JSONObject(new JSONObject(in.readLine()).getString("result"));
         }
         

@@ -38,6 +38,7 @@ public class ResourceControls{
     private boolean is_correct;
     private String log = "";
     private final String path = new File(DBManager.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath()).getParentFile().getParent() + "/resources/";
+    //private final String path = "/home/nicola/analyzer/resources/";
     private boolean correct_encoding;
     private String declared_format;
     private String found_format;
@@ -72,7 +73,7 @@ public class ResourceControls{
         
         ///////////Download solo se non e' gia stato scaricato
         File file = new File(path+resource_id);
-        size = file.length();
+        
         
         if(!file.exists()){
             response_code = Utils.download(r.getUrl(), resource_id, path);
@@ -85,15 +86,16 @@ public class ResourceControls{
             log += "- Connection timed out\n";
         }
         
+        size = file.length();
+        
         is_downloadable = response_code==200;
         
         URL url = new URL(r.getUrl());
         
-        if(url.getFile().equals(""))
+        if(url.getFile().equals("") || r.getFormat() == null || r.getFormat().equals("NULL"))
             is_downloadable = false;
         
         if(is_downloadable){
-        	
             java.nio.file.Path p = java.nio.file.Paths.get(path + resource_id);
             this.found_format = java.nio.file.Files.probeContentType(p);
             
@@ -157,9 +159,8 @@ public class ResourceControls{
                     diretto = shp.isDiretto();
                     log += shp.getLog();
                     geo_processed = geonames_url!=null;
-                    geo_valid = shp.isCorrect() && geonames_url!=null;
-                }
-                //
+                    geo_valid = shp.getGeo().isCorrect() && geonames_url!=null;
+                }                
                 
                 if(files.size()==1 && declared_format != null && declared_format.toUpperCase().contains("CSV")){
                     if(java.nio.file.Files.probeContentType(Paths.get(files.get(0).getAbsolutePath())).equals("text/plain"))
@@ -173,43 +174,40 @@ public class ResourceControls{
                         log += "- Declared encoding: " + dataset_encoding + ", found encoding: " + tikaEnc + "\n";
                     
                     //Verifico correttezza CSV e in points inserisco eventuali lon-lat
-                    List<Coordinate> points = new LinkedList<>();
-                    is_correct = papa.Parse(files.get(0).getAbsolutePath(), points);
-                    log += papa.getLog();
-                    is_empty = papa.isIs_empty();
-                    
-                    if(!points.isEmpty() && geonames_url!= null){
-                        geo_valid = geo.validateCoordinates(points);
-                        log+=geo.getLog();
-                        geo_processed = true;
-                    }
-                    processed=true;
-                }
-                
-                //se la lista di file contiene XML
-                else if(Utils.containsSubString(files, ".xml") != -1){
-                    is_correct = true;
-                    boolean tmp;
-                    List<Integer> index = Utils.getIndexesFromExtension(files, ".xml");
-                    for(int i : index){
-                        String filepath = files.get(i).getAbsolutePath();
-                        
-                        //Verifico encoding
-                        java.io.FileInputStream fis = new java.io.FileInputStream(filepath);
-                        String tikaEnc = Utils.detectEncoding(fis);
-                        correct_encoding = Utils.correctEncoding(dataset_encoding, tikaEnc);
-                        log += "- Declared encoding: " + dataset_encoding + ", found encoding: " + tikaEnc + "\n";
+                    size = new File(files.get(0).getAbsolutePath()).length();
+                    if(size < 10000000){
+                        List<Coordinate> points = new LinkedList<>();
+                        is_correct = papa.Parse(files.get(0).getAbsolutePath(), points);
+                        log += papa.getLog();
+                        is_empty = papa.isIs_empty();
 
-                        //verifico correttezza XML
-                        XMLValidator xmlValidator = new XMLValidator(r.getPackage_id());                        
-                        tmp = xmlValidator.validXML(filepath, files.get(i).getParent());
-                        if(!tmp)
-                            is_correct = false;
-                        log += xmlValidator.getLog();
-                        
+                        if(!points.isEmpty() && geonames_url!= null){
+                            geo_valid = geo.validateCoordinates(points);
+                            log+=geo.getLog();
+                            geo_processed = true;
+                        }
+                        processed=true;
                     }
+                    else{
+                        log += "- File CSV > 10 MB, non analizzato\n";
+                    }
+                }
+                                
+                else if(files.size()==1 && declared_format != null && declared_format.toUpperCase().contains("XML")){
+                    //Verifico encoding
+                    java.io.FileInputStream fis = new java.io.FileInputStream(files.get(0).getAbsolutePath());
+                    String tikaEnc = Utils.detectEncoding(fis);
+                    correct_encoding = Utils.correctEncoding(dataset_encoding, tikaEnc);
+                    if(!correct_encoding)
+                        log += "- Declared encoding: " + dataset_encoding + ", found encoding: " + tikaEnc + "\n";
+                    
+                    //verifico correttezza XML
+                    XMLValidator xmlValidator = new XMLValidator(r.getPackage_id());
+                    is_correct = xmlValidator.validXML(files.get(0).getAbsolutePath(), path);
+                    log += xmlValidator.getLog();
                     diretto = false;
-                    processed=true;
+                    processed = true;
+                    
                 }
                 
                 else if (!processed){
@@ -239,19 +237,24 @@ public class ResourceControls{
                     correct_encoding = Utils.correctEncoding(dataset_encoding, tikaEnc);
                     if(!correct_encoding)
                         log += "- Declared encoding: " + dataset_encoding + ", found encoding: " + tikaEnc + "\n";
-                    
+                                        
                     //Verifico correttezza CSV e in points inserisco eventuali lon-lat
-                    List<Coordinate> points = new LinkedList<>();
-                    is_correct = papa.Parse(path+resource_id, points);
-                    log += papa.getLog();
-                    is_empty = papa.isIs_empty();
-                    
-                    if(!points.isEmpty() && geonames_url!= null){
-                        geo_valid = geo.validateCoordinates(points);
-                        log+=geo.getLog();
-                        geo_processed = true;
+                    if(size < 10000000){
+                        List<Coordinate> points = new LinkedList<>();
+                        is_correct = papa.Parse(path+resource_id, points);
+                        log += papa.getLog();
+                        is_empty = papa.isIs_empty();
+
+                        if(!points.isEmpty() && geonames_url!= null){
+                            geo_valid = geo.validateCoordinates(points);
+                            log+=geo.getLog();
+                            geo_processed = true;
+                        }
+                        processed=true;
                     }
-                    processed=true;
+                    else{
+                        log += "- File CSV > 10 MB, non analizzato\n";
+                    }
                 }
                 
             }
@@ -329,7 +332,7 @@ public class ResourceControls{
                 log+="- Non è stato possibile scaricare la risorsa\n";
         }
         
-        System.out.println(log);
+        //System.out.println(log);
         insertAndDelete();
     }
     

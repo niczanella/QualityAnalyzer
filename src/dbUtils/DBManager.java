@@ -29,7 +29,6 @@ public class DBManager {
         classpath = new File(DBManager.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath()).getParentFile().getParent() + "/files";
     }
         
-    
     private Connection connect() {
         
         SQLiteConfig config = new SQLiteConfig();
@@ -48,7 +47,6 @@ public class DBManager {
         }
         return conn;
     }
-    
     
     public void insertDataset(Dataset d) {
         String sql = "INSERT INTO dataset VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
@@ -592,7 +590,6 @@ public class DBManager {
         return l;
     }
     
-    
     public List<String> getDatasetValidated(){
         List<String> l = new LinkedList<>();
 
@@ -613,10 +610,9 @@ public class DBManager {
         return l;
     }
     
-    
     public Integer[] getCODS(String lat, String lon){
         
-        String sql = "SELECT COD_REG, COD_PRO, PRO_COM FROM adm3 WHERE Contains(geometry,Transform(MakePoint(?,?,4326),32632)) = 1";
+        String sql = "SELECT COD_REG, COD_PROV, PRO_COM FROM adm3 WHERE Contains(geometry,Transform(MakePoint(?,?,4326),32632)) = 1";
         
         Integer[] CODS = new Integer[3];
         
@@ -628,7 +624,7 @@ public class DBManager {
                 
                 if(rs.next()) {
                     CODS[0] = rs.getInt("COD_REG");
-                    CODS[1] = rs.getInt("COD_PRO");
+                    CODS[1] = rs.getInt("COD_PROV");
                     CODS[2] = rs.getInt("PRO_COM");
                 }
         }
@@ -641,7 +637,6 @@ public class DBManager {
     
     public String getGeometry(String ADM, String IDCOD, Integer COD){
         String sql = "SELECT asWKT(geometry) FROM " + ADM + " WHERE " + IDCOD + "=?";
-                
         String result = "";
         try (Connection conn = this.connect();
             PreparedStatement pstmt  = conn.prepareStatement(sql)){

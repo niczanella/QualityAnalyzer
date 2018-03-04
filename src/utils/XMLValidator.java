@@ -49,93 +49,94 @@ public class XMLValidator {
         DocumentBuilder builder = factory.newDocumentBuilder();
         try{
             Document document = builder.parse(new InputSource(filePath));
-            setLog(getLog() + "- Il file " + filePath + " è wellformed\n");
+            setLog(getLog() + "- Il file " + filePath + " is wellformed\n");
+            return true;
         }
-        catch(SAXParseException e){
+        catch(Exception e){
             //il documento non è wellformed
             setLog(getLog() + "- File " + filePath + " isn't wellformed, error: " + e.getMessage() + "\n");
             return false;
         }
         
-        //trovo link per scaricare file xsd
-        String schemaLink="";
-        List<String> lines = Files.readAllLines(p, StandardCharsets.ISO_8859_1);
-        int tmp =0;
-        for(String line:lines){
-            //schemaLocation, se presente, deve essere tra le prime righe del file
-            if(tmp==10)
-                break;
-            
-            if(line.contains("schemaLocation")){
-                schemaLink=line.substring(line.indexOf("schemaLocation"));
-                schemaLink=schemaLink.substring(schemaLink.indexOf("\"")+1);
-                schemaLink=schemaLink.substring(0, schemaLink.indexOf("\""));
-                break;
-            }
-            tmp++;
-        }
-        
-        if(schemaLink.equals("")){
-            
-            List<File> files = new LinkedList<>();
-            Utils.listFiles(dirPath, files);
-            List<File> oldFiles = new LinkedList<>(files);
-            
-            int xsdIndex = Utils.containsSubString(files, ".xsd");
-            
-            if (xsdIndex != -1){
-                return ValidateXML_XSD(files.get(xsdIndex).getAbsolutePath(), filePath);
-            }
-            else{
-                DBManager manager = new DBManager();
-                List<String> urls = manager.getResourcesUrlsFromPackageId(package_id);
-                List <File> newFiles = new LinkedList<>();
-                tmp = 0;
-                for(String s : urls){
-                    String extension = "";
-                    int lastIndex = s.lastIndexOf(".");
-                    if(lastIndex!=-1){
-                        extension = s.substring(lastIndex);
-                        if(!extension.equals(".xsd")){
-                            extension = "";
-                        }
-                    }
-                    Utils.download(s, Integer.toString(tmp)+extension, dirPath);
-                    newFiles.add(new File(dirPath+Integer.toString(tmp)+extension));
-                    tmp++;
-                }
-                
-                files.clear();
-                files.addAll(newFiles);
-                
-                files.addAll(Utils.unzipAllForXML(newFiles));
-                
-                xsdIndex = Utils.containsSubString(files, ".xsd");
-                if(xsdIndex != -1){
-                    setDiretto(false);                    
-                    boolean validXML = ValidateXML_XSD(files.get(xsdIndex).getAbsolutePath(), filePath);
-                    for(File f:files){
-                        FileUtils.deleteQuietly(f);
-                    }
-                    return validXML;
-                }
-                else{
-                    setLog(getLog() + "- File " + filePath + " without schema\n");
-                    files.removeAll(oldFiles);
-                    for(File f:files){
-                        FileUtils.deleteQuietly(f);
-                    }
-                    return false;
-                }                
-            }
-        }
-        else{
-            //scarico il file xsd
-            String xsdName = schemaLink.substring(schemaLink.lastIndexOf("/")+1);
-            Utils.download(schemaLink, xsdName, dirPath);
-            
-            return ValidateXML_XSD(filePath, dirPath + xsdName);            
-        }
+//        //trovo link per scaricare file xsd
+//        String schemaLink="";
+//        List<String> lines = Files.readAllLines(p, StandardCharsets.ISO_8859_1);
+//        int tmp =0;
+//        for(String line:lines){
+//            //schemaLocation, se presente, deve essere tra le prime righe del file
+//            if(tmp==10)
+//                break;
+//            
+//            if(line.contains("schemaLocation")){
+//                schemaLink=line.substring(line.indexOf("schemaLocation"));
+//                schemaLink=schemaLink.substring(schemaLink.indexOf("\"")+1);
+//                schemaLink=schemaLink.substring(0, schemaLink.indexOf("\""));
+//                break;
+//            }
+//            tmp++;
+//        }
+//        
+//        if(schemaLink.equals("")){
+//            
+//            List<File> files = new LinkedList<>();
+//            Utils.listFiles(dirPath, files);
+//            List<File> oldFiles = new LinkedList<>(files);
+//            
+//            int xsdIndex = Utils.containsSubString(files, ".xsd");
+//            
+//            if (xsdIndex != -1){
+//                return ValidateXML_XSD(files.get(xsdIndex).getAbsolutePath(), filePath);
+//            }
+//            else{
+//                DBManager manager = new DBManager();
+//                List<String> urls = manager.getResourcesUrlsFromPackageId(package_id);
+//                List <File> newFiles = new LinkedList<>();
+//                tmp = 0;
+//                for(String s : urls){
+//                    String extension = "";
+//                    int lastIndex = s.lastIndexOf(".");
+//                    if(lastIndex!=-1){
+//                        extension = s.substring(lastIndex);
+//                        if(!extension.equals(".xsd")){
+//                            extension = "";
+//                        }
+//                    }
+//                    Utils.download(s, Integer.toString(tmp)+extension, dirPath);
+//                    newFiles.add(new File(dirPath+Integer.toString(tmp)+extension));
+//                    tmp++;
+//                }
+//                
+//                files.clear();
+//                files.addAll(newFiles);
+//                
+//                files.addAll(Utils.unzipAllForXML(newFiles));
+//                
+//                xsdIndex = Utils.containsSubString(files, ".xsd");
+//                if(xsdIndex != -1){
+//                    setDiretto(false);                    
+//                    boolean validXML = ValidateXML_XSD(files.get(xsdIndex).getAbsolutePath(), filePath);
+//                    for(File f:files){
+//                        FileUtils.deleteQuietly(f);
+//                    }
+//                    return validXML;
+//                }
+//                else{
+//                    setLog(getLog() + "- File " + filePath + " without schema\n");
+//                    files.removeAll(oldFiles);
+//                    for(File f:files){
+//                        FileUtils.deleteQuietly(f);
+//                    }
+//                    return false;
+//                }
+//            }
+//        }
+//        else{
+//            //scarico il file xsd
+//            String xsdName = schemaLink.substring(schemaLink.lastIndexOf("/")+1);
+//            Utils.download(schemaLink, xsdName, dirPath);
+//            
+//            return ValidateXML_XSD(filePath, dirPath + xsdName);            
+//        }
     }
     
     private boolean ValidateXML_XSD(String xmlPath, String xsdPath){

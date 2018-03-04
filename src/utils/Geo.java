@@ -21,12 +21,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import org.apache.commons.io.FileUtils;
+import org.geotools.data.FileDataStore;
+import org.geotools.data.FileDataStoreFinder;
+import org.geotools.data.simple.SimpleFeatureSource;
 import org.geotools.feature.FeatureIterator;
 import org.geotools.geojson.feature.FeatureJSON;
 import org.geotools.geometry.jts.JTS;
 import org.geotools.geometry.jts.JTSFactoryFinder;
 import org.geotools.referencing.CRS;
 import org.opengis.feature.simple.SimpleFeature;
+import org.opengis.feature.simple.SimpleFeatureType;
 import org.opengis.geometry.MismatchedDimensionException;
 import org.opengis.referencing.FactoryException;
 import org.opengis.referencing.crs.CoordinateReferenceSystem;
@@ -109,6 +113,11 @@ public class Geo {
                 }
                 else if(c.x!=0 && c.y!=0){
                     int distanceMeters = (int) getDistance(point);
+                    //System.out.println(point);
+//                    for(Coordinate ca: multiPolygonWGS84.getCoordinates()){
+//                        System.out.println("[" + ca.x + "," + ca.y + "],");
+//                    }
+                    
                     if(distanceMeters>0){
                         distanze.add(distanceMeters);
                     }
@@ -166,7 +175,9 @@ public class Geo {
                         boolean intersectGeometry = multiPolygonWGS84.intersects(geom);
                         if(!intersectGeometry){     
                             for(Coordinate c : geom.getCoordinates()){
-                                points.add(new Coordinate(c.y, c.x));                                
+                                Point point = geometryFactory.createPoint(new Coordinate(c.y, c.x));
+                                if(!multiPolygonWGS84.contains(point))
+                                    points.add(new Coordinate(c.y, c.x));
                             }
                         }
                     }
@@ -381,7 +392,6 @@ public class Geo {
             resultWKT = manager.getGeometry("adm1", "COD_REG", CODS[0]);
         }
         
-        
 
         WKTReader wkt = new WKTReader();
         Geometry polygon = wkt.read(resultWKT);
@@ -391,6 +401,7 @@ public class Geo {
         MathTransform transform1 = CRS.findMathTransform(toCrs1, CRS.decode("EPSG:4326"), true);
         multiPolygonWGS84 = JTS.transform(polygon, transform1);
         
+
         
     }
     

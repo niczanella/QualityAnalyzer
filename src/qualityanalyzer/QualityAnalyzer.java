@@ -2,8 +2,11 @@ package qualityanalyzer;
 
 import utils.DateAnalyzer;
 import dbUtils.DBManager;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,7 +28,7 @@ import utils.ResourceControls;
  */
 public class QualityAnalyzer {
 
-    static String link = "http://dati.trentino.it";
+    static String portal;
     static String modified;
     static DateAnalyzer da;
     public static  Map<String, String> tagsRules = new HashMap<>();
@@ -34,21 +37,43 @@ public class QualityAnalyzer {
     
     public static void main(String[] args) throws Exception {
 
-        c = new Client(link);
+        //c = new Client(link);
         DBManager manager = new DBManager();
-        
-        Scanner sc = new Scanner(System.in);
         
         if(!new File(new File(QualityAnalyzer.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath()).getParentFile().getParent()+"/files/db.sqlite").exists()) {
             System.err.println("Errore, eseguire installazione e riavviare il programma");
             System.exit(0);
         }
         
+        
+        try {
+            boolean portaleValido = false;
+            System.out.println("Inserire portale da analizzare tra:");
+            String portali = FileUtils.readFileToString(new File(new File(QualityAnalyzer.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath()).getParentFile().getParent()+"/files/portali.txt")).trim();
+            System.out.println(portali);
+            System.out.println();
+            while(!portaleValido){
+                BufferedReader br = new BufferedReader(new InputStreamReader(System.in));                
+                portal = br.readLine();
+                if(portali.contains(portal)){
+                    portaleValido = true;
+                }
+                else{
+                    System.out.println("Portale inserito non valido, inserine uno compreso nella lista\n");
+                }
+                
+            }
+            c = new Client(portal);
+        }
+        catch (IOException e) {
+        }
+                
         String info = FileUtils.readFileToString(new File(new File(QualityAnalyzer.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath()).getParentFile().getParent()+"/files/comandi.txt")).trim();
         
         System.out.println(info);
         System.out.println();
         
+        Scanner sc = new Scanner(System.in);
         while(sc.hasNextLine()){
             String input = sc.nextLine();
             if(input.equals("init-and-validate")){
